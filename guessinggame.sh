@@ -5,19 +5,26 @@ read guess
 # count how many files are in the directory
 correct_answer=$(ls | wc -l)
 
+# checks if the guess was either too high or too low
+# param 1: guess
+# param 2: correct answer
+function give_hint {
+  
+  if [[ $1 -lt $2 ]]
+  then
+    echo "$1 is too low."
+  else
+    echo "$1 is too high."
+  fi
+}
+
 # ask for a guess until the user gets it right
 while [[ $guess -ne $correct_answer ]]
 do
   echo "Wrong"
-
-  # check if the guess was either too high or too low
-  if [[ $guess -lt $correct_answer ]]
-  then
-    echo "$guess is too low."
-  else
-    echo "$guess is too high."
-  fi
-
+  
+  give_hint $guess $correct_answer
+  
   echo "Try again."
   read guess
 done
